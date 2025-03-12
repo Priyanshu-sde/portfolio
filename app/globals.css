@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Fix typewriter effect in light mode by ensuring text color is visible */
+.typewriter-text {
+  color: inherit !important;
+}
+
+/* Apply this class to your TypeAnimation component */
+
+/* Add these rules to ensure typewriter text is visible in light mode */
+.dark-mode .typewriter-text {
+  color: white;
+}
+
+body:not(.dark-mode) .typewriter-text {
+  color: #1f2937; /* dark gray for light mode */
+}

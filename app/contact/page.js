@@ -25,6 +25,12 @@ export default function Contact() {
   // Save dark mode preference
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode);
+    // Add a class to the document body to maintain consistent dark mode
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
   }, [darkMode]);
 
   const handleChange = (e) => {
@@ -554,7 +560,7 @@ export default function Contact() {
                 className="mb-4 md:mb-0"
               >
                 <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
-                  © 2025 Priyanshu Chaurasia. All rights reserved.
+                  © 2025 Priyanshu Chaurasia. All rights reserved. | <a href="https://priyanshu.online" className={`hover:${darkMode ? 'text-blue-400' : 'text-blue-600'} transition-colors`}>priyanshu.online</a>
                 </p>
               </motion.div>
               <motion.div 

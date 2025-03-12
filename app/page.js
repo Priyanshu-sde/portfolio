@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import ParticlesBackground from '../components/ParticlesBackground';
 import WaveDivider from '../components/WaveDivider';
@@ -11,7 +11,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(true);
   const [hoveredSection, setHoveredSection] = useState(null);
   
-  const sections = ['home', 'about', 'skills', 'experience', 'projects-preview', 'contact'];
+  const sections = useMemo(() => ['home', 'about', 'skills', 'experience', 'projects-preview', 'contact'], []);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -312,7 +312,7 @@ export default function Home() {
           name: 'React', 
           svg: (
             <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"></circle><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9-15.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.1 10 22.1 15.6 0 4.7-5.8 9.7-15.7 13.4z"></path></g>
+              <g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"></circle><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-9-8.7-17.9-13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9-15.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.1 10 22.1 15.6 0 4.7-5.8 9.7-15.7 13.4z"></path></g>
             </svg>
           )
         },
@@ -320,7 +320,7 @@ export default function Home() {
           name: 'Node.js', 
           svg: (
             <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#83CD29" d="M112.771 30.334L68.674 4.729c-2.781-1.584-6.402-1.584-9.205 0L14.901 30.334C12.031 31.985 10 35.088 10 38.407v51.142c0 3.319 2.084 6.423 4.954 8.083l11.775 6.688c5.628 2.772 7.617 2.772 10.178 2.772 8.333 0 13.093-5.039 13.093-13.828v-50.49c0-.713-.371-1.774-1.071-1.774h-5.623C42.594 41 41 42.061 41 42.773v50.49c0 3.896-3.524 7.773-10.11 4.48L18.723 90.73c-.424-.23-.723-.693-.693-1.181V38.407c0-.482.555-.966.982-1.213l44.424-25.561c.415-.235 1.025-.235 1.439 0l43.882 25.555c.42.253.272.722.272 1.219v51.142c0 .488.183.963-.232 1.198l-44.086 25.576c-.378.227-.847.227-1.261 0l-11.307-6.749c-.341-.198-.746-.269-1.073-.086-3.146 1.783-3.726 2.02-6.677 3.043-.726.253-1.797.692.41 1.929l14.798 8.754a9.294 9.294 0 004.647 1.246c1.642 0 3.25-.426 4.667-1.246l43.885-25.582c2.87-1.672 4.23-4.764 4.23-8.083V38.407c0-3.319-1.36-6.414-4.229-8.073zM77.91 81.445c-11.726 0-14.309-3.235-15.17-9.066-.1-.628-.633-1.379-1.272-1.272-1.272h-5.731c-.709 0-1.279.86-1.279 1.566 0 7.466 4.059 16.512 23.453 16.512 14.039 0 22.088-5.455 22.088-15.109 0-9.572-6.467-12.084-20.082-13.886-13.762-13.762-1.819-15.16-2.738-15.16-5.962 0-2.658 1.184-6.203 11.374-6.203 9.105 0 12.461 1.954 13.842 8.091.118.577.645.991 1.24.991h5.754c.354 0 .692-.143.94-.396.24-.272.367-.613.335-.979-.891-10.568-7.912-15.493-22.112-15.493-12.631 0-20.166 5.334-20.166 14.275 0 9.698 7.497 12.378 19.622 13.577 14.505 1.422 15.633 3.542 15.633 6.395 0 4.955-3.978 7.066-13.309 7.066z"></path>
+              <path fill="#83CD29" d="M112.771 30.334L68.674 4.729c-2.781-1.584-6.402-1.584-9.205 0L14.901 30.334C12.031 31.985 10 35.088 10 38.407v51.142c0 3.319 2.084 6.423 4.954 8.083l11.775 6.688c5.628 2.772 7.617 2.772 10.178 2.772 8.333 0 13.093-5.039 13.093-13.828v-50.49c0-.713-.371-1.774-1.071-1.774h-5.623C42.594 41 41 42.061 41 42.773v50.49c0 3.896-3.524 7.773-10.11 4.48L18.723 90.73c-.424-.23-.723-.693-.693-1.181V38.407c0-.482.555-.966.966-.982 1.213l44.424-25.561c.415-.235 1.025-.235 1.439 0l43.882 25.555c.42.253.272.722.272 1.219v51.142c0 .488.183.963-.232 1.198l-44.086 25.576c-.378.227-.847.227-1.261 0l-11.307-6.749c-.341-.198-.746-.269-1.073-.086-3.146 1.783-3.726 2.02-6.677 3.043-.726.253-1.797.692.41 1.929l14.798 8.754a9.294 9.294 0 004.647 1.246c1.642 0 3.25-.426 4.667-1.246l43.885-25.582c2.87-1.672 4.23-4.764 4.23-8.083V38.407c0-3.319-1.36-6.414-4.229-8.073zM77.91 81.445c-11.726 0-14.309-3.235-15.17-9.066-.1-.628-.633-1.379-1.272-1.272-1.272h-5.731c-.709 0-1.279.86-1.279 1.566 0 7.466 4.059 16.512 23.453 16.512 14.039 0 22.088-5.455 22.088-15.109 0-9.572-6.467-12.084-20.082-13.886-13.762-13.762-1.819-15.16-2.738-15.16-5.962 0-2.658 1.184-6.203 11.374-6.203 9.105 0 12.461 1.954 13.842 8.091.118.577.645.645 1.24.991h5.754c.354 0 .692-.143.94-.396.24-.272.367-.613.335-.979-.891-10.568-7.912-15.493-22.112-15.493-12.631 0-20.166 5.334-20.166 14.275 0 9.698 7.497 12.378 19.622 13.577 14.505 1.422 15.633 3.542 15.633 6.395 0 4.955-3.978 7.066-13.309 7.066z"></path>
             </svg>
           )
         },
@@ -336,7 +336,7 @@ export default function Home() {
           name: 'Tailwind CSS',
           svg: (
             <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66C72.883 56.629 80.145 64 96.004 64c17.066 0 27.73-8.531 32-25.602-6.399 8.536-13.867 11.735-22.399 9.602-4.87-1.215-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738zM32.004 64c-17.066 0-27.73 8.531-32 25.602C6.402 81.066 13.87 77.867 22.402 80c4.871 1.215 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.53 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66C55.128 71.371 47.868 64 32.004 64z" fill="#38BDF8"/>
+              <path d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.531 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738-17.066 0-27.73 8.531-32 25.597-32 17.066 0 27.73 8.531 32 25.597 32 17.066 0 27.73-8.53 32-25.597 32z" fill="#38BDF8"/>
             </svg>
           )
         }
@@ -363,7 +363,7 @@ export default function Home() {
 
         {/* Coding Profiles Section - Horizontal with scrolling numbers */}
         <section id="coding-profiles" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-900' : 'bg-white'
+          darkMode ? 'bg-gray-900' : 'bg-gray-100'
         }`}>
           <div className="max-w-6xl mx-auto">
             <motion.h2 
@@ -471,21 +471,21 @@ export default function Home() {
           darkMode ? 'bg-gray-900' : 'bg-gray-100'
         }`}>
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8">Experience & Responsibilities</h2>
+            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}>Experience & Responsibilities</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-white mb-4">Executive Member</h3>
-                <p className="text-blue-400 mb-2">Programming and Tech Skills Club, KNIT</p>
-                <p className="text-gray-400 mb-4">2025 - Present</p>
-                <ul className="text-gray-300 space-y-2">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Executive Member</h3>
+                <p className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} mb-2`}>Programming and Tech Skills Club, KNIT</p>
+                <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-4`}>2025 - Present</p>
+                <ul className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
                   <li>• Conducted coding workshops and mentorship sessions</li>
                   <li>• Organized competitive programming contests</li>
                   <li>• Facilitated open-source contribution events</li>
                 </ul>
               </div>
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold text-white mb-4">Positions of Responsibility</h3>
-                <ul className="text-gray-300 space-y-2">
+              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
+                <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Positions of Responsibility</h3>
+                <ul className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
                   <li>• Video Editing, Inzio&apos;23 (January &apos;24)</li>
                   <li>• Graphic Designing, Anubhuti&apos;24 (March-April &apos;24)</li>
                   <li>• Graphic Designing, Cultural Council (October &apos;24 - present)</li>
@@ -503,25 +503,25 @@ export default function Home() {
         }`}>
           <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold text-white">Featured Project</h2>
-              <Link href="/projects" className="text-blue-400 hover:text-blue-300">View all projects →</Link>
+              <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Featured Project</h2>
+              <Link href="/projects" className={`${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'}`}>View all projects →</Link>
             </div>
-            <div className="bg-gray-700 p-6 rounded-lg">
-              <h3 className="text-2xl font-semibold text-white mb-2">TaskTrackr</h3>
-              <p className="text-gray-300 mb-4">TODO App with Authentication</p>
-              <p className="text-gray-400 mb-4">
+            <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} p-6 rounded-lg shadow-lg`}>
+              <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>TaskTrackr</h3>
+              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>TODO App with Authentication</p>
+              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-4`}>
                 A task management application with user authentication, allowing users to create, edit, and delete tasks efficiently.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">React</span>
-                <span className="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">Tailwind CSS</span>
-                <span className="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">Node.js</span>
-                <span className="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">Express</span>
-                <span className="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>React</span>
+                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Tailwind CSS</span>
+                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Node.js</span>
+                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Express</span>
+                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>MongoDB</span>
               </div>
               <div className="flex gap-4">
-                <a href="https://task-trackr-indol.vercel.app/" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all">View Demo</a>
-                <a href="https://github.com/Priyanshu-sde/TaskTrackr" className="bg-transparent hover:bg-gray-600 text-gray-300 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded transition-all">Source Code</a>
+                <Link href="https://task-trackr-indol.vercel.app/" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all">View Demo</Link>
+                <a href="https://github.com/Priyanshu-sde/TaskTrackr" className={`bg-transparent hover:bg-blue-800 ${darkMode ? 'text-gray-300 border-gray-500' : 'text-gray-600 border-gray-400'} font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded transition-all`}>Source Code</a>
               </div>
             </div>
           </div>
@@ -532,19 +532,19 @@ export default function Home() {
           darkMode ? 'bg-gray-900' : 'bg-gray-100'
         }`}>
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8">Achievements</h2>
+            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}>Achievements</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-6 rounded-lg">
+              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
                 <h3 className="text-xl font-semibold text-white mb-4">Hack the Web</h3>
-                <p className="text-gray-300">Winner in Round 1 of the Open Source event organized by college</p>
+                <p className="text-white opacity-90">Winner in Round 1 of the Open Source event organized by college</p>
               </div>
-              <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-6 rounded-lg">
+              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
                 <h3 className="text-xl font-semibold text-white mb-4">Competitive Programming</h3>
-                <p className="text-gray-300">Strong performance across multiple platforms showcasing problem-solving skills</p>
+                <p className="text-white opacity-90">Strong performance across multiple platforms showcasing problem-solving skills</p>
               </div>
-              <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-6 rounded-lg">
+              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
                 <h3 className="text-xl font-semibold text-white mb-4">Technical Skills</h3>
-                <p className="text-gray-300">Proficient in multiple programming languages and web development technologies</p>
+                <p className="text-white opacity-90">Proficient in multiple programming languages and web development technologies</p>
               </div>
             </div>
           </div>
@@ -555,17 +555,16 @@ export default function Home() {
           darkMode ? 'bg-gray-800' : 'bg-white'
         }`}>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Get In Touch</h2>
-            <p className="text-gray-300 mb-8">I&apos;m currently looking for new opportunities to grow and learn. Feel free to reach out if you want to connect!</p>
+            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Get In Touch</h2>
+            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-8`}>I&apos;m currently looking for new opportunities to grow and learn. Feel free to reach out if you want to connect!</p>
             <div className="flex justify-center gap-4 mb-8">
               <a href="mailto:priyanshu.sde@gmail.com" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all">
                 Email Me
               </a>
-              <a href="tel:7068451653" className="bg-transparent hover:bg-blue-800 text-blue-400 font-semibold hover:text-white py-3 px-6 border border-blue-500 hover:border-transparent rounded-lg transition-all">
+              <a href="tel:7068451653" className={`bg-transparent hover:bg-blue-800 ${darkMode ? 'text-blue-400 border-blue-500' : 'text-blue-600 border-blue-600'} font-semibold hover:text-white py-3 px-6 border hover:border-transparent rounded-lg transition-all`}>
                 Call Me
               </a>
             </div>
-            
           </div>
         </section>
 
@@ -582,7 +581,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="mb-6 md:mb-0"
               >
-                <h3 className="text-2xl font-bold text-white mb-2">Priyanshu Chaurasia</h3>
+                <h3 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>Priyanshu Chaurasia</h3>
                 <p className="text-gray-400">IT Student & Web Developer</p>
               </motion.div>
               
@@ -610,7 +609,7 @@ export default function Home() {
                 } transition-colors hover:underline`}>
                   <span className="sr-only">LinkedIn</span>
                   <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 3.915-4.428 6.902-4.428h.48c2.76 0 5.088 1.842 6.48 4.428 1.392 2.586 1.392 4.428 0 6.48-1.842 1.392-2.586 1.392-4.428 0-6.48-1.842z" />
                   </svg>
                 </a>
                 <a href="mailto:priyanshu.sde@gmail.com" className="text-gray-400 hover:text-white transition-all transform hover:scale-110 duration-300">
@@ -630,7 +629,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="text-gray-400 text-center"
               >
-                © 2025 Priyanshu Chaurasia. All rights reserved. | <a href="https://priyanshu.online" className="hover:text-blue-400 transition-colors">priyanshu.online</a>
+                © 2025 Priyanshu Chaurasia. All rights reserved. | <a href="https://priyanshu.online" className={`hover:${darkMode ? 'text-blue-400' : 'text-blue-600'} transition-colors`}>priyanshu.online</a>
               </motion.p>
             </div>
           </div>

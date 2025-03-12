@@ -199,8 +199,8 @@ export default function Home() {
               }`}
             >
               <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-lg leading-relaxed`}>
-                I'm a Bachelor of Technology student in Information Technology at KNIT Sultanpur, passionate about web development and competitive programming. 
-                With a strong foundation in backend development and problem-solving, I'm constantly exploring new technologies and contributing to open-source projects. 
+                I&apos;m a Bachelor of Technology student in Information Technology at KNIT Sultanpur, passionate about web development and competitive programming. 
+                With a strong foundation in backend development and problem-solving, I&apos;m constantly exploring new technologies and contributing to open-source projects. 
                 My goal is to create efficient, scalable solutions while continuously expanding my technical expertise.
               </p>
             </motion.div>

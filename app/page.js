@@ -1,121 +1,167 @@
-"use client"
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, useMemo } from 'react';
-import { TypeAnimation } from 'react-type-animation';
-import ParticlesBackground from '../components/ParticlesBackground';
-import WaveDivider from '../components/WaveDivider';
+"use client";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
+import { TypeAnimation } from "react-type-animation";
+import ParticlesBackground from "../components/ParticlesBackground";
+import WaveDivider from "../components/WaveDivider";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
   const [darkMode, setDarkMode] = useState(true);
   const [hoveredSection, setHoveredSection] = useState(null);
-  
-  const sections = useMemo(() => ['home', 'about', 'skills', 'experience', 'projects-preview', 'contact'], []);
-  
+
+  const sections = useMemo(
+    () => [
+      "home",
+      "about",
+      "skills",
+      "experience",
+      "projects-preview",
+      "contact",
+    ],
+    []
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-          
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(section);
             break;
           }
         }
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [sections]);
-  
+
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark');
-      document.body.classList.add('dark');
-      document.body.style.backgroundColor = '#111827'; // dark gray-900
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("dark");
+      document.body.style.backgroundColor = "#111827"; // dark gray-900
     } else {
-      document.documentElement.classList.remove('dark');
-      document.body.classList.remove('dark');
-      document.body.style.backgroundColor = '#ffffff'; // white
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("dark");
+      document.body.style.backgroundColor = "#ffffff"; // white
     }
   }, [darkMode]);
-  
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       window.scrollTo({
         top: element.offsetTop - 80,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
-  
+
   return (
     <>
-      <main className={`min-h-screen relative overflow-hidden ${
-        darkMode 
-        ? 'bg-gradient-to-b from-gray-900 to-gray-800 text-white' 
-        : 'bg-gradient-to-b from-white to-gray-100 text-gray-900'
-      }`}>
+      <main
+        className={`min-h-screen relative overflow-hidden ${
+          darkMode
+            ? "bg-gradient-to-b from-gray-900 to-gray-800 text-white"
+            : "bg-gradient-to-b from-white to-gray-100 text-gray-900"
+        }`}
+      >
         <ParticlesBackground />
-        
-        <header className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-lg ${
-          darkMode ? 'bg-gray-900/80 border-b border-gray-800' : 'bg-white/80 border-b border-gray-200'
-        }`}>
+
+        <header
+          className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-lg ${
+            darkMode
+              ? "bg-gray-900/80 border-b border-gray-800"
+              : "bg-white/80 border-b border-gray-200"
+          }`}
+        >
           <div className="max-w-6xl mx-auto flex justify-between items-center py-4 px-4 md:px-8">
-            <Link href="/" className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <Link
+              href="/"
+              className={`text-2xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              }`}
+            >
               Priyanshu Chaurasia
             </Link>
-            
+
             <div className="flex items-center gap-6">
               <nav>
                 <ul className="flex space-x-6">
                   {sections.map((section) => (
                     <li key={section}>
-                      <button 
-                        onClick={() => scrollToSection(section)} 
+                      <button
+                        onClick={() => scrollToSection(section)}
                         className={`transition-all duration-300 ${
                           activeSection === section
-                          ? darkMode 
-                            ? 'text-blue-400 font-medium' 
-                            : 'text-blue-600 font-medium'
-                          : darkMode
-                            ? 'text-gray-400 hover:text-gray-200'
-                            : 'text-gray-600 hover:text-gray-800'
+                            ? darkMode
+                              ? "text-blue-400 font-medium"
+                              : "text-blue-600 font-medium"
+                            : darkMode
+                            ? "text-gray-400 hover:text-gray-200"
+                            : "text-gray-600 hover:text-gray-800"
                         }`}
                       >
                         <span className="capitalize">
-                          {section.replace('-preview', '').replace('-', ' ')}
+                          {section.replace("-preview", "").replace("-", " ")}
                         </span>
                       </button>
                     </li>
                   ))}
                 </ul>
               </nav>
-              
-              <button 
-                onClick={() => setDarkMode(!darkMode)} 
+
+              <button
+                onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-full transition-all duration-300 ${
-                  darkMode 
-                  ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                  darkMode
+                    ? "bg-gray-800 hover:bg-gray-700 text-yellow-400"
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-800"
                 }`}
                 aria-label="Toggle dark mode"
               >
                 {darkMode ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"
+                    />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
                   </svg>
                 )}
               </button>
@@ -126,8 +172,11 @@ export default function Home() {
         <div className="pt-20"></div>
 
         {/* Hero Section */}
-        <section id="home" className="min-h-screen flex flex-col justify-center items-center px-4 md:px-8 lg:px-16">
-          <motion.div 
+        <section
+          id="home"
+          className="min-h-screen flex flex-col justify-center items-center px-4 md:px-8 lg:px-16"
+        >
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -135,37 +184,54 @@ export default function Home() {
           >
             <TypeAnimation
               sequence={[
-                'Priyanshu Chaurasia',
+                "Priyanshu Chaurasia",
                 2000,
-                'Backend Developer',
+                "Backend Developer",
                 2000,
-                'Competitive Programmer',
+                "Competitive Programmer",
                 2000,
-                'Tech Enthusiast',
+                "Tech Enthusiast",
                 2000,
               ]}
               wrapper="h1"
               speed={50}
               repeat={Infinity}
-              className={`text-4xl md:text-6xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+              className={`text-4xl md:text-6xl font-bold mb-4 ${
+                darkMode ? "text-white" : "text-gray-900"
+              }`}
             />
-            <h2 className={`text-xl md:text-2xl ${darkMode ? 'text-blue-400' : 'text-blue-600'} mb-8`}>
+            <h2
+              className={`text-xl md:text-2xl ${
+                darkMode ? "text-blue-400" : "text-blue-600"
+              } mb-8`}
+            >
               IT Student & Web Developer
             </h2>
-            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto mb-8`}>
-              Bachelor of Technology in Information Technology student at KNIT Sultanpur with a passion for web development, 
-              competitive programming, and open source contributions.
+            <p
+              className={`${
+                darkMode ? "text-gray-300" : "text-gray-600"
+              } max-w-2xl mx-auto mb-8`}
+            >
+              Bachelor of Technology in Information Technology student at KNIT
+              Sultanpur with a passion for web development, competitive
+              programming, and open source contributions.
             </p>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
               className="flex flex-wrap justify-center gap-4"
             >
-              <Link href="/projects" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all hover:scale-105 transform duration-300">
+              <Link
+                href="/projects"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all hover:scale-105 transform duration-300"
+              >
                 View Projects
               </Link>
-              <Link href="/contact" className="bg-transparent hover:bg-blue-800 text-blue-400 font-semibold hover:text-white py-3 px-6 border border-blue-500 hover:border-transparent rounded-lg transition-all hover:scale-105 transform duration-300">
+              <Link
+                href="/contact"
+                className="bg-transparent hover:bg-blue-800 text-blue-400 font-semibold hover:text-white py-3 px-6 border border-blue-500 hover:border-transparent rounded-lg transition-all hover:scale-105 transform duration-300"
+              >
                 Contact Me
               </Link>
             </motion.div>
@@ -174,16 +240,21 @@ export default function Home() {
 
         {/* About Section - Simplified to just a paragraph */}
         <WaveDivider color="#1f2937" />
-        <section id="about" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-800' : 'bg-gray-100'
-        }`}>
+        <section
+          id="about"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-800" : "bg-gray-100"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-8`}
             >
               About Me
             </motion.h2>
@@ -193,50 +264,87 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
               className={`backdrop-blur-lg p-8 rounded-lg shadow-xl ${
-                darkMode 
-                ? 'bg-gray-700/70 border border-gray-600' 
-                : 'bg-white/70 border border-gray-200'
+                darkMode
+                  ? "bg-gray-700/70 border border-gray-600"
+                  : "bg-white/70 border border-gray-200"
               }`}
             >
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} text-lg leading-relaxed`}>
-                I&apos;m a Bachelor of Technology student in Information Technology at KNIT Sultanpur, passionate about web development and competitive programming. 
-                With a strong foundation in backend development and problem-solving, I&apos;m constantly exploring new technologies and contributing to open-source projects. 
-                My goal is to create efficient, scalable solutions while continuously expanding my technical expertise.
+              <p
+                className={`${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                } text-lg leading-relaxed`}
+              >
+                I&apos;m a Bachelor of Technology student in Information
+                Technology at KNIT Sultanpur, passionate about web development
+                and competitive programming. With a strong foundation in backend
+                development and problem-solving, I&apos;m constantly exploring
+                new technologies and contributing to open-source projects. My
+                goal is to create efficient, scalable solutions while
+                continuously expanding my technical expertise.
               </p>
             </motion.div>
           </div>
         </section>
 
         {/* Education Section - Moved from About */}
-        <section id="education" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-900' : 'bg-white'
-        }`}>
+        <section
+          id="education"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-900" : "bg-white"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-8`}
             >
               Education
             </motion.h2>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
               className={`backdrop-blur-lg p-8 rounded-lg shadow-xl hover:shadow-blue-500/20 transition-all duration-300 ${
-                darkMode 
-                ? 'bg-gray-700/70 border border-gray-600' 
-                : 'bg-white/70 border border-gray-200'
+                darkMode
+                  ? "bg-gray-700/70 border border-gray-600"
+                  : "bg-white/70 border border-gray-200"
               }`}
             >
-              <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Kamla Nehru Institute of Technology, Sultanpur</h3>
-              <p className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} text-xl mb-4`}>B.Tech in Information Technology</p>
+              <h3
+                className={`text-2xl font-semibold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                } mb-4`}
+              >
+                Kamla Nehru Institute of Technology, Sultanpur
+              </h3>
+              <p
+                className={`${
+                  darkMode ? "text-blue-400" : "text-blue-600"
+                } text-xl mb-4`}
+              >
+                B.Tech in Information Technology
+              </p>
               <div className="flex flex-wrap justify-between items-center">
-                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>Expected 2027</p>
-                <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>CGPA: 7.14/10</p>
+                <p
+                  className={`${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } mb-2`}
+                >
+                  Expected 2027
+                </p>
+                <p
+                  className={`${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } mb-2`}
+                >
+                  CGPA: 7.14/10
+                </p>
               </div>
             </motion.div>
           </div>
@@ -245,220 +353,356 @@ export default function Home() {
         {/* Skills Section with logos */}
         {/* Skills Section with SVG logos instead of images */}
         <WaveDivider color="#111827" flip={true} />
-<section id="skills" className={`py-16 px-4 md:px-8 lg:px-16 ${
-  darkMode ? 'bg-gray-800' : 'bg-gray-100'
-}`}>
-  <div className="max-w-6xl mx-auto">
-    <motion.h2 
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-12`}
-    >
-      Technical Skills
-    </motion.h2>
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {[
-        { 
-          name: 'C/C++', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#659AD3" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"></path><path fill="#03599C" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"></path><path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'HTML', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"></path><path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"></path><path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"></path><path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'CSS', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"></path><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"></path><path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"></path><path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"></path><path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"></path><path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'JavaScript', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"></path><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'Express.js', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill={darkMode ? "#ffffff" : "#000000"} d="M40.53 77.82V50.74H42V55a5.57 5.57 0 00.48-.6 7.28 7.28 0 016.64-4.12c3.35-.1 6.07 1.14 7.67 4.12a13.24 13.24 0 01.32 12.14c-1.49 3.34-5.17 5-9.11 4.39a7.37 7.37 0 01-5.88-3.88v10.77zM42 60.32c.13 1.32.18 2.26.33 3.18.58 3.62 2.72 5.77 6.08 6.16A6.91 6.91 0 0056 65.27a11.77 11.77 0 00-.26-9.68 6.77 6.77 0 00-7.13-3.94 6.59 6.59 0 00-5.89 4.87 33.4 33.4 0 00-.72 3.8zM88.41 64a7.92 7.92 0 01-7.74 7c-6.16.31-9.05-3.78-9.51-8.5a13.62 13.62 0 011.2-7.5 8.37 8.37 0 018.71-4.67 8 8 0 017.1 6.09 41.09 41.09 0 01.69 4.5H72.67c-.3 4.28 2 7.72 5.26 8.55 4.06 1 7.53-.76 8.79-4.62.28-.99.79-1.13 1.69-.85zm-15.74-4.45h14.12c-.09-4.56-2.93-7.86-6.78-7.91-4.36-.07-7.5 3.11-7.34 7.91zM91.39 64.1h1.42a5.69 5.69 0 003.34 4.9 8.73 8.73 0 007.58-.2 3.41 3.41 0 002-3.35 3.09 3.09 0 00-2.08-3.09c-1.56-.58-3.22-.9-4.81-1.41A35.25 35.25 0 0194 59.18c-2.56-1.25-2.72-6.12.18-7.66a10.21 10.21 0 019.76-.15 5.14 5.14 0 012.6 5.24h-1.22c0-.06-.11-.11-.11-.17-.15-3.89-3.41-5.09-6.91-4.75a9.17 9.17 0 00-3 .91 3 3 0 00-1.74 3 3 3 0 002 2.82c1.54.56 3.15.92 4.73 1.36 1.27.35 2.59.58 3.82 1a4.51 4.51 0 013.1 4.07 4.81 4.81 0 01-2.59 5c-3.34 1.89-8.84 1.39-11.29-1a6.67 6.67 0 01-1.94-4.75zM125.21 56.61h-1.33c0-.18-.07-.34-.09-.49a4.35 4.35 0 00-3.54-4.18 8.73 8.73 0 00-5.61.27 3.41 3.41 0 00-2.47 3.25 3.14 3.14 0 002.4 3.16c2 .62 4.05 1 6.08 1.56a17 17 0 011.94.59 5 5 0 01.27 9.31 11.13 11.13 0 01-9 .09 6.24 6.24 0 01-3.76-6.06h1.3a7.29 7.29 0 00.55 2.88 4.93 4.93 0 003.91 2.26 9.19 9.19 0 005.49-.43 3.31 3.31 0 001.8-3.34 3.14 3.14 0 00-2-2.64c-1.31-.47-2.68-.79-4-1.22-1.65-.53-3.36-1-4.94-1.67a4.78 4.78 0 01-2.43-6 5.6 5.6 0 013.32-3.88 11.94 11.94 0 018.87-.09 5.79 5.79 0 013.32 5.13zM61.31 71.52c-3.53 0-6.43-2.81-6.43-6.25s2.9-6.28 6.43-6.28 6.42 2.81 6.42 6.28-2.88 6.25-6.42 6.42 6.25z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'MongoDB', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#4FAA41" d="M82.99 49.09c-4.73-20.93-15.89-27.79-17.08-30.41-.95-1.38-.95-1.92-1.33-2.66-1.33 17.94-6.06 25.88-6.06 25.88-.19.53-2.84-2.77.76-18.74-3.42 1.38-12.35 12.18-12.35 12.18l.57 1.17s2.09-1.17 3.04-1.38c-1.14 1.49-3.42 4.47-3.99 12.07-.57 7.71 2.47 12.5 3.42 14.74.76 1.92 3.8 7.71 9.67 10.9 5.87 3.19 5.87 3.72 5.87 3.72s9.29-2.66 12.16-8.13c2.85-5.47 5.3-13.92 5.32-19.34z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'React', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"></circle><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-9-8.7-17.9-13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9-15.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.1 10 22.1 15.6 0 4.7-5.8 9.7-15.7 13.4z"></path></g>
-            </svg>
-          )
-        },
-        { 
-          name: 'Node.js', 
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path fill="#83CD29" d="M112.771 30.334L68.674 4.729c-2.781-1.584-6.402-1.584-9.205 0L14.901 30.334C12.031 31.985 10 35.088 10 38.407v51.142c0 3.319 2.084 6.423 4.954 8.083l11.775 6.688c5.628 2.772 7.617 2.772 10.178 2.772 8.333 0 13.093-5.039 13.093-13.828v-50.49c0-.713-.371-1.774-1.071-1.774h-5.623C42.594 41 41 42.061 41 42.773v50.49c0 3.896-3.524 7.773-10.11 4.48L18.723 90.73c-.424-.23-.723-.693-.693-1.181V38.407c0-.482.555-.966.966-.982 1.213l44.424-25.561c.415-.235 1.025-.235 1.439 0l43.882 25.555c.42.253.272.722.272 1.219v51.142c0 .488.183.963-.232 1.198l-44.086 25.576c-.378.227-.847.227-1.261 0l-11.307-6.749c-.341-.198-.746-.269-1.073-.086-3.146 1.783-3.726 2.02-6.677 3.043-.726.253-1.797.692.41 1.929l14.798 8.754a9.294 9.294 0 004.647 1.246c1.642 0 3.25-.426 4.667-1.246l43.885-25.582c2.87-1.672 4.23-4.764 4.23-8.083V38.407c0-3.319-1.36-6.414-4.229-8.073zM77.91 81.445c-11.726 0-14.309-3.235-15.17-9.066-.1-.628-.633-1.379-1.272-1.272-1.272h-5.731c-.709 0-1.279.86-1.279 1.566 0 7.466 4.059 16.512 23.453 16.512 14.039 0 22.088-5.455 22.088-15.109 0-9.572-6.467-12.084-20.082-13.886-13.762-13.762-1.819-15.16-2.738-15.16-5.962 0-2.658 1.184-6.203 11.374-6.203 9.105 0 12.461 1.954 13.842 8.091.118.577.645.645 1.24.991h5.754c.354 0 .692-.143.94-.396.24-.272.367-.613.335-.979-.891-10.568-7.912-15.493-22.112-15.493-12.631 0-20.166 5.334-20.166 14.275 0 9.698 7.497 12.378 19.622 13.577 14.505 1.422 15.633 3.542 15.633 6.395 0 4.955-3.978 7.066-13.309 7.066z"></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'Next.js',
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64c11.2 0 21.7-2.9 30.8-7.9L48.4 55.3v36.6h-6.8V41.8h6.8l50.5 75.8C116.4 106.2 128 86.5 128 64c0-35.3-28.7-64-64-64zm22.1 84.6l-7.5-11.3V41.8h7.5v42.8z" fill={darkMode ? "#ffffff" : "#000000"}></path>
-            </svg>
-          )
-        },
-        { 
-          name: 'Tailwind CSS',
-          svg: (
-            <svg viewBox="0 0 128 128" className="h-16 w-16">
-              <path d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.531 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738-17.066 0-27.73 8.531-32 25.597-32 17.066 0 27.73 8.531 32 25.597 32 17.066 0 27.73-8.53 32-25.597 32z" fill="#38BDF8"/>
-            </svg>
-          )
-        }
-      ].map((skill, index) => (
-        <motion.div
-          key={skill.name}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          viewport={{ once: true }}
-          className={`flex flex-col items-center p-4 rounded-lg ${
-            darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'
-          } transition-colors duration-300`}
+        <section
+          id="skills"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-800" : "bg-gray-100"
+          }`}
         >
-          {skill.svg}
-          <p className={`mt-2 font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-            {skill.name}
-          </p>
-        </motion.div>
-      ))}
-    </div>
-    </div>
-  </section>
-
-        {/* Coding Profiles Section - Horizontal with scrolling numbers */}
-        <section id="coding-profiles" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-900' : 'bg-gray-100'
-        }`}>
           <div className="max-w-6xl mx-auto">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-12`}
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-12`}
+            >
+              Technical Skills
+            </motion.h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  name: "C/C++",
+                  svg: (
+                    <svg viewBox="0 0 128 128" className="h-16 w-16">
+                      <path
+                        fill="#659AD3"
+                        d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-62c-.6-1.2-1.5-2.1-2.4-2.7z"
+                      ></path>
+                      <path
+                        fill="#03599C"
+                        d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"
+                      ></path>
+                      <path
+                        fill="#fff"
+                        d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "HTML",
+                  svg: (
+                    <svg viewBox="0 0 128 128" className="h-16 w-16">
+                      <path
+                        fill="#E44D26"
+                        d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"
+                      ></path>
+                      <path
+                        fill="#F16529"
+                        d="M64 116.8l36.378-10.086 8.559-95.878H64z"
+                      ></path>
+                      <path
+                        fill="#EBEBEB"
+                        d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"
+                      ></path>
+                      <path
+                        fill="#fff"
+                        d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "CSS",
+                  svg: (
+                    <svg viewBox="0 0 128 128" className="h-16 w-16">
+                      <path
+                        fill="#1572B6"
+                        d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"
+                      ></path>
+                      <path
+                        fill="#33A9DC"
+                        d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"
+                      ></path>
+                      <path
+                        fill="#fff"
+                        d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"
+                      ></path>
+                      <path
+                        fill="#EBEBEB"
+                        d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"
+                      ></path>
+                      <path
+                        fill="#fff"
+                        d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"
+                      ></path>
+                      <path
+                        fill="#EBEBEB"
+                        d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "JavaScript",
+                  svg: (
+                    <svg viewBox="0 0 128 128" className="h-16 w-16">
+                      <path
+                        fill="#F0DB4F"
+                        d="M1.408 1.408h125.184v125.185H1.408z"
+                      ></path>
+                      <path
+                        fill="#323330"
+                        d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "Express.js",
+                  svg: (
+                    <svg viewBox="0 -181.5 512 512" className="h-16 w-16">
+                      <path
+                        fill={darkMode ? "#ffffff" : "#000000"}
+                        d="M3.33224862,115.629027 L3.33224862,58.6475756 L74.4757566,58.6475756 L74.4757566,55.315327 L3.33224862,55.315327 L3.33224862,3.33224862 L78.9742922,3.33224862 L78.9742922,0 L-3.55271368e-15,0 L-3.55271368e-15,118.961276 L79.640742,118.961276 L79.640742,115.629027 L3.33224862,115.629027 L3.33224862,115.629027 Z M143.786528,33.3224862 L114.296128,72.1431826 L85.472177,33.3224862 L81.1402538,33.3224862 L112.296778,74.642369 L78.14123,118.961276 L82.1399284,118.961276 L114.296128,77.1415554 L146.618939,118.961276 L150.78425,118.961276 L116.462089,74.642369 L147.785226,33.3224862 L143.786528,33.3224862 L143.786528,33.3224862 Z M160.780996,148.285063 L160.780996,94.9690856 L161.114221,94.9690856 C163.11358,102.744371 167.056701,108.992275 172.943703,113.712984 C178.830705,118.433693 186.32819,120.794012 195.436381,120.794012 C201.323384,120.794012 206.543854,119.599969 211.09795,117.211845 C215.652046,114.823722 219.456324,111.574812 222.510902,107.465018 C225.565478,103.355224 227.898028,98.5790488 229.508624,93.1363488 C231.119218,87.6936488 231.924504,81.973346 231.924504,75.9752684 C231.924504,69.532889 231.09145,63.5904384 229.425318,58.1477384 C227.759184,52.7050384 225.343328,47.9844 222.177676,43.9856818 C219.012024,39.9869634 215.179976,36.8768958 210.681418,34.6553856 C206.18286,32.4338754 201.101232,31.323137 195.436381,31.323137 C191.104437,31.323137 187.07801,31.9618116 183.35698,33.23918 C179.635951,34.5165484 176.331504,36.3214982 173.443541,38.654084 C170.555577,40.9866696 168.056416,43.7357472 165.945981,46.9013992 C163.835546,50.0670512 162.224976,53.5381088 161.114221,57.3146762 L160.780996,57.3146762 L160.780996,33.3224862 L157.448747,33.3224862 L157.448747,148.285063 L160.780996,148.285063 L160.780996,148.285063 Z M195.436381,117.628376 C184.995284,117.628376 176.609208,114.046245 170.277904,106.881874 C163.9466,99.717504 160.780996,89.415405 160.780996,75.9752684 C160.780996,70.421493 161.558513,65.1454854 163.11357,60.1470876 C164.668627,55.1486896 166.917872,50.7612728 169.861373,46.9847054 C172.804874,43.2081382 176.442543,40.2091444 180.774487,37.9876342 C185.106432,35.766124 189.993681,34.6553856 195.436381,34.6553856 C200.990156,34.6553856 205.849638,35.766124 210.01497,37.9876342 C214.1803,40.2091444 217.62359,43.2359066 220.34494,47.0680118 C223.06629,50.9001168 225.121156,55.2875336 226.5096,60.2303938 C227.898044,65.173254 228.592256,70.421493 228.592256,75.9752684 C228.592256,80.9736664 227.95358,85.9442208 226.676212,90.887081 C225.398844,95.8299412 223.427284,100.272895 220.76147,104.216075 C218.095658,108.159256 214.680138,111.380398 210.514806,113.879596 C206.349474,116.378795 201.323384,117.628376 195.436381,117.628376 L195.436381,117.628376 L195.436381,117.628376 Z M250.251872,118.961276 L250.251872,70.4770582 C250.251872,65.8118868 250.918314,61.2578592 252.25122,56.814839 C253.584126,52.3718186 255.638992,48.4564656 258.41588,45.0686626 C261.192768,41.6808596 264.719362,39.0150872 268.99577,37.0712658 C273.272176,35.1274444 278.353806,34.322159 284.240808,34.6553856 L284.240808,31.323137 C279.131334,31.2120614 274.660612,31.7674308 270.828506,32.9892614 C266.996402,34.211092 263.691954,35.8771996 260.915066,37.9876342 C258.138178,40.098069 255.916702,42.569462 254.25057,45.4018874 C252.584436,48.2343128 251.362624,51.2610752 250.585096,54.4822648 L250.251872,54.4822648 L250.251872,33.3224862 L246.919622,33.3224862 L246.919622,118.961276 L250.251872,118.961276 L250.251872,118.961276 Z M288.406118,76.8083306 L360.049464,76.8083306 C360.271614,70.9213286 359.688476,65.2565626 358.300032,59.8138626 C356.911588,54.3711628 354.690112,49.5394506 351.635536,45.3185812 C348.580958,41.0977118 344.637838,37.7099596 339.806052,35.155223 C334.974268,32.6004862 329.226196,31.323137 322.561666,31.323137 C317.78542,31.323137 313.120318,32.3228016 308.566222,34.3221608 C304.012126,36.32152 300.013468,39.2372084 296.570126,43.0693134 C293.126786,46.9014184 290.34994,51.5942884 288.239506,57.1480638 C286.12907,62.7018392 285.07387,69.0330484 285.07387,76.1418808 C285.07387,82.473185 285.79585,88.387867 287.23983,93.8861048 C288.683812,99.3843424 290.90529,104.160518 293.904328,108.214774 C296.903366,112.26903 300.763182,115.406866 305.483892,117.628376 C310.204602,119.849886 315.897136,120.905088 322.561666,120.794012 C332.33631,120.794012 340.555776,118.044935 347.220306,112.546697 C353.884836,107.048459 357.827958,99.3010588 359.049788,89.304263 L355.71754,89.304263 C354.273558,98.7456812 350.580352,105.826639 344.637814,110.547348 C338.695274,115.268057 331.225558,117.628376 322.228442,117.628376 C316.119288,117.628376 310.954354,116.573175 306.733486,114.46274 C302.512616,112.352305 299.069326,109.464385 296.403514,105.798894 C293.737702,102.133402 291.766142,97.8292904 290.488774,92.8864302 C289.211404,87.94357 288.517194,82.5842572 288.406118,76.8083306 L288.406118,76.8083306 L288.406118,76.8083306 Z M356.717214,73.476082 L288.406118,73.476082 C288.739344,67.4780046 289.850082,62.0909232 291.738366,57.3146762 C293.62665,52.5384294 296.098044,48.4564656 299.15262,45.0686626 C302.207196,41.6808596 305.76156,39.0983926 309.815816,37.3211846 C313.870072,35.5439764 318.22972,34.6553856 322.89489,34.6553856 C328.448666,34.6553856 333.335916,35.6828186 337.556784,37.7377156 C341.777654,39.7926126 345.304248,42.597227 348.136674,46.1516434 C350.9691,49.7060596 353.107272,53.8435602 354.551252,58.5642694 C355.995234,63.2849786 356.717214,68.255533 356.717214,73.476082 L356.717214,73.476082 L356.717214,73.476082 Z M429.193622,58.6475756 L432.52587,58.6475756 C432.52587,49.0950818 429.749024,42.1529666 424.195248,37.8210218 C418.641474,33.489077 411.088452,31.323137 401.535958,31.323137 C396.204334,31.323137 391.705844,31.98958 388.040352,33.3224862 C384.37486,34.6553922 381.375866,36.3770368 379.04328,38.4874716 C376.710694,40.5979062 375.044586,42.930457 374.044908,45.4851936 C373.045228,48.0399304 372.545396,50.4835548 372.545396,52.8161406 C372.545396,57.481312 373.37845,61.2022858 375.044582,63.9791734 C376.710714,66.7560612 379.32095,68.9220012 382.875366,70.4770582 C385.319028,71.5878134 388.095874,72.587478 391.205988,73.476082 C394.316102,74.364686 397.926002,75.3088138 402.035796,76.3084934 C405.701288,77.1970974 409.311188,78.0856882 412.865604,78.9742922 C416.42002,79.8628962 419.557856,81.0569402 422.279206,82.5564594 C425.000556,84.0559788 427.222032,85.9720026 428.943704,88.3045884 C430.665374,90.637174 431.526196,93.6917048 431.526196,97.468272 C431.526196,101.133764 430.665374,104.243831 428.943704,106.798568 C427.222032,109.353305 425.028324,111.435939 422.362512,113.046534 C419.6967,114.657129 416.725474,115.823405 413.448748,116.545395 C410.17202,117.267386 406.978646,117.628376 403.868532,117.628376 C393.760662,117.628376 386.01326,115.379131 380.626098,110.880573 C375.238936,106.382015 372.545396,99.3010572 372.545396,89.6374878 L369.213146,89.6374878 C369.213146,100.411812 372.128836,108.298055 377.9603,113.296453 C383.791764,118.294851 392.427754,120.794012 403.868532,120.794012 C407.534024,120.794012 411.22723,120.377485 414.94826,119.544419 C418.669288,118.711353 422.001504,117.350698 424.945004,115.462415 C427.888506,113.574131 430.276594,111.130506 432.10934,108.131468 C433.942086,105.132429 434.858444,101.466992 434.858444,97.1350472 C434.858444,93.0252534 434.05316,89.693038 432.442564,87.1383014 C430.83197,84.5835646 428.721566,82.4731616 426.111292,80.807029 C423.501018,79.1408964 420.55756,77.8357786 417.280834,76.8916368 C414.004106,75.947495 410.699658,75.0311358 407.367394,74.1425318 C402.702222,72.9207012 398.620258,71.8654996 395.12138,70.9768956 C391.622502,70.0882914 388.373592,69.03309 385.374552,67.8112594 C382.48659,66.5894288 380.181808,64.8400158 378.460136,62.5629678 C376.738466,60.2859198 375.877644,57.03701 375.877644,52.8161406 C375.877644,52.038612 376.099792,50.650189 376.544094,48.6508298 C376.988396,46.6514706 378.043598,44.624373 379.70973,42.569476 C381.375862,40.5145792 383.93056,38.6818608 387.373902,37.0712658 C390.817242,35.460671 395.53788,34.6553856 401.535958,34.6553856 C405.645752,34.6553856 409.394494,35.099681 412.782298,35.988285 C416.1701,36.8768892 419.085788,38.2930806 421.52945,40.236902 C423.973112,42.1807234 425.861366,44.6521164 427.194272,47.6511552 C428.527178,50.650194 429.193622,54.3156308 429.193622,58.6475756 L429.193622,58.6475756 L429.193622,58.6475756 Z M506.335178,58.6475756 L509.667426,58.6475756 C509.667426,49.0950818 506.89058,42.1529666 501.336804,37.8210218 C495.783028,33.489077 488.230008,31.323137 478.677514,31.323137 C473.34589,31.323137 468.847398,31.98958 465.181906,33.3224862 C461.516416,34.6553922 458.517422,36.3770368 456.184836,38.4874716 C453.85225,40.5979062 452.186142,42.930457 451.186462,45.4851936 C450.186784,48.0399304 449.68695,50.4835548 449.68695,52.8161406 C449.68695,57.481312 450.520004,61.2022858 452.186138,63.9791734 C453.85227,66.7560612 456.462506,68.9220012 460.016922,70.4770582 C462.460582,71.5878134 465.237428,72.587478 468.347544,73.476082 C471.457658,74.364686 475.067558,75.3088138 479.177352,76.3084934 C482.842842,77.1970974 486.452742,78.0856882 490.00716,78.9742922 C493.561576,79.8628962 496.699412,81.0569402 499.420762,82.5564594 C502.142112,84.0559788 504.363588,85.9720026 506.085258,88.3045884 C507.80693,90.637174 508.667752,93.6917048 508.667752,97.468272 C508.667752,101.133764 507.80693,104.243831 506.085258,106.798568 C504.363588,109.353305 502.16988,111.435939 499.504068,113.046534 C496.838256,114.657129 493.86703,115.823405 490.590302,116.545395 C487.313576,117.267386 484.120202,117.628376 481.010088,117.628376 C470.902216,117.628376 463.154816,115.379131 457.767654,110.880573 C452.380492,106.382015 449.68695,99.3010572 449.68695,89.6374878 L446.354702,89.6374878 C446.354702,100.411812 449.27039,108.298055 455.101854,113.296453 C460.93332,118.294851 469.56931,120.794012 481.010088,120.794012 C484.67558,120.794012 488.368784,120.377485 492.089814,119.544419 C495.810844,118.711353 499.14306,117.350698 502.08656,115.462415 C505.030062,113.574131 507.418148,111.130506 509.250894,108.131468 C511.08364,105.132429 512,101.466992 512,97.1350472 C512,93.0252534 511.194714,89.693038 509.58412,87.1383014 C507.973524,84.5835646 505.863122,82.4731616 503.252848,80.807029 C500.642572,79.1408964 497.699116,77.8357786 494.422388,76.8916368 C491.145662,75.947495 487.841214,75.0311358 484.508948,74.1425318 C479.843778,72.9207012 475.761814,71.8654996 472.262936,70.9768956 C468.764056,70.0882914 465.515146,69.03309 462.516108,67.8112594 C459.628144,66.5894288 457.323362,64.8400158 455.601692,62.5629678 C453.880022,60.2859198 453.0192,57.03701 453.0192,52.8161406 C453.0192,52.038612 453.241348,50.650189 453.68565,48.6508298 C454.129952,46.6514706 455.185152,44.624373 456.851286,42.569476 C458.517418,40.5145792 461.072116,38.6818608 464.515458,37.0712658 C467.958798,35.460671 472.679436,34.6553856 478.677514,34.6553856 C482.787308,34.6553856 486.53605,35.099681 489.923852,35.988285 C493.311656,36.8768892 496.227344,38.2930806 498.671006,40.236902 C501.114666,42.1807234 503.002922,44.6521164 504.335828,47.6511552 C505.668734,50.650194 506.335178,54.3156308 506.335178,58.6475756 L506.335178,58.6475756 L506.335178,58.6475756 Z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "MongoDB",
+                  svg: (
+                    <svg viewBox="0 0 256 512" className="h-16 w-16">
+                      <path
+                        fill="#4FAA41"
+                        d="M119.87 3.2C128.6 13.45 154.24 44.06 167 73.41c17 38.43 19.89 66.48 23.78 96.07 5.53 42.53 4.35 84.1-9.86 126.1-8.35 25.91-19.85 50.16-32.41 73.96-3.92 7.5-8.12 14.91-12.7 22.15-1.52 2.37-2.53 5.65-5.82 6.27-3.89.74-7.14-2.28-9.87-4.7-17.38-15.49-32.64-33.38-44.74-53.75-9.35-15.85-17.5-32.49-23.44-50.08-15.67-46.1-19.49-93.38-10.88-141.11 5.94-32.48 17.38-63.16 35.09-91.34 7.39-11.9 16.64-22.58 25.76-33.19 1.32-1.54 2.58-3.32 4.68-3.73 2.7-.52 5.24 1.41 7.21 3.22zM126.89 457.26c3.47-8.9 5.41-18.28 6.43-27.68 1.73-16.17 1.73-32.44 2.02-48.67.23-13.24.04-26.49 0-39.74 0-2.19.12-4.42-.69-6.49-.51 0-.83.4-1.12.77-1.37 1.74-2.58 3.59-3.74 5.48-4.04 6.7-8.03 13.46-12.48 19.86-4.94 7.14-9.55 14.64-14.88 21.67-2.94 3.81-5.93 7.57-8.97 11.29-2.83 3.48-6.13 6.52-9.4 9.52 10.13 15.91 21.38 30.92 34.38 44.71 3.91 4.11 8.42 7.67 13.45 10.89 1.34.88 3.05 2.5 4.52 1.33z"
+                      ></path>
+                    </svg>
+                    
+                  
+                  ),
+                },
+                {
+                  name: "React",
+                  svg: (
+                    
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="-11.5 -10.23174 23 20.46348"
+                      className="h-16 w-16"
+                      fill="#61DAFB"
+                    >
+                      <circle cx="0" cy="0" r="2.05" />
+                      <g stroke="currentColor" stroke-width="1" fill="none">
+                        <ellipse rx="11" ry="4.2" />
+                        <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                        <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+                      </g>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "Node.js",
+                  svg: (
+                    <svg viewBox="0 0 32 32" className="h-16 w-16">
+                      <path
+                        fill="#83CD29"
+                        d="M17.1725 2.29872C16.4627 1.89953 15.5373 1.90132 14.8269 2.29872C11.2689 4.26227 7.71082 6.22641 4.15216 8.18906C3.45969 8.55335 2.99264 9.29698 3.00009 10.0688V21.9328C2.99509 22.7197 3.48622 23.4705 4.19655 23.8298C5.21871 24.3736 6.2118 24.9726 7.25244 25.4802C8.45451 26.0709 9.95843 26.2015 11.1752 25.5855C12.1629 25.075 12.6016 23.9395 12.6003 22.896C12.6083 18.9806 12.6016 15.0651 12.6034 11.1496C12.6269 10.9756 12.4962 10.7896 12.3064 10.7938C11.8517 10.7866 11.3964 10.7896 10.9417 10.7926C10.7699 10.7764 10.6022 10.9191 10.6152 11.0918C10.6091 14.982 10.6164 18.8734 10.6115 22.7642C10.6214 23.3024 10.2578 23.8196 9.73913 24.0014C8.5412 24.4213 5.12198 22.2012 5.12198 22.2012C4.9965 22.1431 4.91682 22.007 4.92912 21.8718C4.92912 17.9576 4.92973 14.0433 4.92912 10.1297C4.91187 9.97191 5.00912 9.8298 5.15402 9.76538C8.70033 7.8134 12.2448 5.85654 15.7911 3.90336C15.9143 3.82115 16.086 3.8214 16.2089 3.90396C19.7552 5.85654 23.3003 7.81161 26.8472 9.76368C26.9926 9.828 27.0857 9.9725 27.0709 10.1297C27.0703 14.0433 27.0721 17.9576 27.0697 21.8713C27.0802 22.0098 27.0086 22.144 26.8793 22.2048C23.3661 24.1462 19.8129 26.025 16.3315 28.0228C16.1796 28.1099 16.0075 28.2086 15.8373 28.1126C14.9218 27.6062 14.0174 27.0801 13.1049 26.5688C13.0057 26.5069 12.8794 26.4803 12.7759 26.5496C12.3668 26.7652 11.982 26.9398 11.5122 27.1258C10.8524 27.387 10.9578 27.4938 11.5529 27.8405C12.62 28.4444 13.6889 29.0459 14.756 29.6504C15.4585 30.0888 16.4024 30.12 17.1275 29.7149C20.6861 27.7538 24.2436 25.7904 27.8029 23.8293C28.5113 23.468 29.0049 22.7202 28.9999 21.9327V10.0688C29.0068 9.31264 28.5576 8.58227 27.886 8.21259C24.3156 6.23947 20.7435 4.27064 17.1725 2.29872Z" fill="#8CC84B"></path> <path d="M22.5419 11.2062C21.1452 10.459 19.4836 10.4192 17.9315 10.5169C16.8102 10.6277 15.6309 10.9371 14.814 11.7409C13.9761 12.5489 13.7937 13.8537 14.1917 14.9085C14.4769 15.6539 15.1948 16.1386 15.9372 16.395C16.8935 16.7326 17.8979 16.837 18.9026 16.9414C19.819 17.0366 20.7357 17.1319 21.6165 17.4042C21.9763 17.5234 22.3953 17.7058 22.5055 18.0973C22.6073 18.5609 22.4957 19.0998 22.1193 19.4219C20.9237 20.3682 17.5979 20.2232 16.4166 19.4784C15.939 19.1611 15.7332 18.5994 15.6495 18.0641C15.6402 17.8973 15.5059 17.7443 15.3248 17.757C14.8713 17.7516 14.4178 17.7528 13.9643 17.7564C13.8061 17.7431 13.6416 17.8557 13.6329 18.0172C13.5397 20.4689 15.7914 21.5377 17.9039 21.773C19.1108 21.888 20.3442 21.8814 21.5327 21.6224C22.4261 21.419 23.3219 21.0444 23.9369 20.3563C24.6953 19.52 24.8444 18.2749 24.5043 17.2332C24.2443 16.4559 23.5012 15.9573 22.7416 15.7008C21.7086 15.3466 20.4844 15.1562 19.5488 15.0671C18.1889 14.9376 16.5729 14.9905 16.188 14.0969C16.0345 13.629 16.1651 13.048 16.5951 12.7602C17.7328 11.9885 20.0483 12.091 21.2265 12.6675C21.7675 12.9384 22.081 13.4948 22.2104 14.0565C22.2344 14.2215 22.3454 14.3937 22.5364 14.3865C22.9868 14.3955 23.4372 14.3889 23.8875 14.3895C24.0422 14.4003 24.2116 14.313 24.2418 14.1546C24.2227 12.9806 23.6232 11.7788 22.5419 11.2062Z"
+                      ></path>
+                    </svg>
+                  ),
+                },
+                {
+                  name: "Next.js",
+                  svg: (
+                    <svg viewBox="0 -101.5 512 512" className="h-16 w-16">
+                      <path
+                        d="M120.81043,80.5613102 L217.378325,80.5613102 L217.378325,88.2366589 L129.662487,88.2366589 L129.662487,146.003758 L212.147564,146.003758 L212.147564,153.679106 L129.662487,153.679106 L129.662487,217.101725 L218.384241,217.101725 L218.384241,224.777073 L120.81043,224.777073 L120.81043,80.5613102 Z M226.0292,80.5613102 L236.289538,80.5613102 L281.756922,143.983929 L328.230222,80.5613102 L391.441486,0 L287.591232,150.649363 L341.105941,224.777073 L330.443237,224.777073 L281.756922,157.314798 L232.869425,224.777073 L222.407904,224.777073 L276.324978,150.649363 L226.0292,80.5613102 Z M344.928421,88.2366588 L344.928421,80.5613102 L454.975585,80.5613102 L454.975585,88.2366589 L404.27744,88.2366589 L404.27744,224.777073 L395.425382,224.777073 L395.425382,88.2366589 L344.928421,88.2366588 Z M1.42108547e-14,80.5613102 L11.0650714,80.5613102 L163.64593,308.884007 L100.591558,224.777073 L9.25442331,91.4683847 L8.85205708,224.777073 L1.42108547e-14,224.777073 L1.42108547e-14,80.5613102 Z M454.083705,214.785469 C452.275167,214.785469 450.918762,213.38418 450.918762,211.573285 C450.918762,209.762388 452.275167,208.361099 454.083705,208.361099 C455.913774,208.361099 457.248648,209.762388 457.248648,211.573285 C457.248648,213.38418 455.913774,214.785469 454.083705,214.785469 Z M462.781915,206.334618 L467.518563,206.334618 C467.583153,208.900055 469.456284,210.624719 472.212151,210.624719 C475.290972,210.624719 477.03492,208.770705 477.03492,205.29982 L477.03492,183.310363 L481.85769,183.310363 L481.85769,205.321379 C481.85769,211.573285 478.240613,215.173518 472.255212,215.173518 C466.635824,215.173518 462.781915,211.681076 462.781915,206.334618 Z M488.166045,206.054362 L492.945754,206.054362 C493.354828,209.007848 496.239878,210.883419 500.395211,210.883419 C504.270652,210.883419 507.11264,208.878498 507.11264,206.119036 C507.11264,203.747625 505.304102,202.324777 501.191828,201.354653 L497.187209,200.384531 C491.56782,199.069474 489.005723,196.353129 489.005723,191.782772 C489.005723,186.24229 493.527071,182.555823 500.30909,182.555823 C506.617445,182.555823 511.224912,186.24229 511.504805,191.480955 L506.811217,191.480955 C506.359083,188.613703 503.861576,186.824365 500.244499,186.824365 C496.43365,186.824365 493.893085,188.656819 493.893085,191.459398 C493.893085,193.679901 495.52938,194.95184 499.577063,195.900406 L503.000368,196.741178 C509.373314,198.228702 512,200.815695 512,205.493846 C512,211.443935 507.392533,215.173518 500.029197,215.173518 C493.139526,215.173518 488.51053,211.6164 488.166045,206.054362 Z"
+                        fill={darkMode ? "#ffffff" : "#000000"}
+                      ></path>
+                    </svg>
+                  )
+                },
+                {
+                  name: "Tailwind CSS",
+                  svg: (
+                    
+                    <svg viewBox="0 0 32 32" className="h-16 w-16">
+                      <path
+                        d="M9,13.7q1.4-5.6,7-5.6c5.6,0,6.3,4.2,9.1,4.9q2.8.7,4.9-2.1-1.4,5.6-7,5.6c-5.6,0-6.3-4.2-9.1-4.9Q11.1,10.9,9,13.7ZM2,22.1q1.4-5.6,7-5.6c5.6,0,6.3,4.2,9.1,4.9q2.8.7,4.9-2.1-1.4,5.6-7,5.6c-5.6,0-6.3-4.2-9.1-4.9Q4.1,19.3,2,22.1Z"
+                        fill="#38BDF8"
+                      />
+                    </svg>
+                    
+                  ),
+                },
+              ].map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`flex flex-col items-center p-4 rounded-lg ${
+                    darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100"
+                  } transition-colors duration-300`}
+                >
+                  {skill.svg}
+                  <p
+                    className={`mt-2 font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    {skill.name}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Coding Profiles Section - Horizontal with scrolling numbers */}
+        <section
+          id="coding-profiles"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-900" : "bg-gray-100"
+          }`}
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-12`}
             >
               Coding Profiles
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.a 
-                href="https://www.codechef.com/users/priyanshu_sde" 
-                target="_blank" 
+              <motion.a
+                href="https://www.codechef.com/users/priyanshu_sde"
+                target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 viewport={{ once: true }}
                 className={`backdrop-blur-lg p-6 rounded-lg shadow-xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105 ${
-                  darkMode 
-                  ? 'bg-gray-700/70 border border-gray-600' 
-                  : 'bg-white/70 border border-gray-200'
+                  darkMode
+                    ? "bg-gray-700/70 border border-gray-600"
+                    : "bg-white/70 border border-gray-200"
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Codechef</h3>
-                  <span className={`px-3 py-1 rounded-full ${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'}`}>
+                  <h3
+                    className={`text-xl font-semibold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    Codechef
+                  </h3>
+                  <span
+                    className={`px-3 py-1 rounded-full ${
+                      darkMode
+                        ? "bg-blue-900 text-blue-300"
+                        : "bg-blue-100 text-blue-800"
+                    }`}
+                  >
                     3 ★
                   </span>
                 </div>
                 <div className="flex justify-center">
                   <TypeAnimation
-                    sequence={['1', '16', '161', '1618']}
+                    sequence={["1", "16", "161", "1618"]}
                     wrapper="p"
                     speed={10}
-                    className={`text-3xl font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}
+                    className={`text-3xl font-bold ${
+                      darkMode ? "text-blue-400" : "text-blue-600"
+                    }`}
                   />
                 </div>
               </motion.a>
-              
-              <motion.a 
-                href="https://codeforces.com/profile/Priyanshu_sde" 
-                target="_blank" 
+
+              <motion.a
+                href="https://codeforces.com/profile/Priyanshu_sde"
+                target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
                 className={`backdrop-blur-lg p-6 rounded-lg shadow-xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105 ${
-                  darkMode 
-                  ? 'bg-gray-700/70 border border-gray-600' 
-                  : 'bg-white/70 border border-gray-200'
+                  darkMode
+                    ? "bg-gray-700/70 border border-gray-600"
+                    : "bg-white/70 border border-gray-200"
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Codeforces</h3>
-                  <span className={`px-3 py-1 rounded-full ${darkMode ? 'bg-gray-500 text-gray-900' : 'bg-gray-500 text-gray-900'}`}>
+                  <h3
+                    className={`text-xl font-semibold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    Codeforces
+                  </h3>
+                  <span
+                    className={`px-3 py-1 rounded-full ${
+                      darkMode
+                        ? "bg-gray-500 text-gray-900"
+                        : "bg-gray-500 text-gray-900"
+                    }`}
+                  >
                     Newbie
                   </span>
                 </div>
                 <div className="flex justify-center">
                   <TypeAnimation
-                    sequence={['1', '11', '112', '1129']}
+                    sequence={["1", "11", "112", "1129"]}
                     wrapper="p"
                     speed={10}
-                    className={`text-3xl font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}
+                    className={`text-3xl font-bold ${
+                      darkMode ? "text-blue-400" : "text-blue-600"
+                    }`}
                   />
                 </div>
               </motion.a>
-              
-              <motion.a 
-                href="https://leetcode.com/u/Priyanshu_sde/" 
-                target="_blank" 
+
+              <motion.a
+                href="https://leetcode.com/u/Priyanshu_sde/"
+                target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}
                 className={`backdrop-blur-lg p-6 rounded-lg shadow-xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105 ${
-                  darkMode 
-                  ? 'bg-gray-700/70 border border-gray-600' 
-                  : 'bg-white/70 border border-gray-200'
+                  darkMode
+                    ? "bg-gray-700/70 border border-gray-600"
+                    : "bg-white/70 border border-gray-200"
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Leetcode</h3>
+                  <h3
+                    className={`text-xl font-semibold ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    Leetcode
+                  </h3>
                 </div>
                 <div className="flex justify-center">
                   <TypeAnimation
-                    sequence={['1', '15', '153', '1532']}
+                    sequence={["1", "15", "153", "1532"]}
                     wrapper="p"
                     speed={10}
-                    className={`text-3xl font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}
+                    className={`text-3xl font-bold ${
+                      darkMode ? "text-blue-400" : "text-blue-600"
+                    }`}
                   />
                 </div>
               </motion.a>
@@ -467,30 +711,88 @@ export default function Home() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-900' : 'bg-gray-100'
-        }`}>
+        <section
+          id="experience"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-900" : "bg-gray-100"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
-            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}>Experience & Responsibilities</h2>
+            <h2
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-8`}
+            >
+              Experience & Responsibilities
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
-                <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Executive Member</h3>
-                <p className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} mb-2`}>Programming and Tech Skills Club, KNIT</p>
-                <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-4`}>2025 - Present</p>
-                <ul className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
+              <div
+                className={`${
+                  darkMode ? "bg-gray-800" : "bg-white"
+                } p-6 rounded-lg shadow-lg`}
+              >
+                <h3
+                  className={`text-xl font-semibold ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  } mb-4`}
+                >
+                  Executive Member
+                </h3>
+                <p
+                  className={`${
+                    darkMode ? "text-blue-400" : "text-blue-600"
+                  } mb-2`}
+                >
+                  Programming and Tech Skills Club, KNIT
+                </p>
+                <p
+                  className={`${
+                    darkMode ? "text-gray-400" : "text-gray-500"
+                  } mb-4`}
+                >
+                  2025 - Present
+                </p>
+                <ul
+                  className={`${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } space-y-2`}
+                >
                   <li>• Conducted coding workshops and mentorship sessions</li>
                   <li>• Organized competitive programming contests</li>
                   <li>• Facilitated open-source contribution events</li>
                 </ul>
               </div>
-              <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-lg shadow-lg`}>
-                <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Positions of Responsibility</h3>
-                <ul className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
+              <div
+                className={`${
+                  darkMode ? "bg-gray-800" : "bg-white"
+                } p-6 rounded-lg shadow-lg`}
+              >
+                <h3
+                  className={`text-xl font-semibold ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  } mb-4`}
+                >
+                  Positions of Responsibility
+                </h3>
+                <ul
+                  className={`${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } space-y-2`}
+                >
                   <li>• Video Editing, Inzio&apos;23 (January &apos;24)</li>
-                  <li>• Graphic Designing, Anubhuti&apos;24 (March-April &apos;24)</li>
-                  <li>• Graphic Designing, Cultural Council (October &apos;24 - present)</li>
-                  <li>• Executive Members, PTSC (February &apos;25 - present)</li>
-                  <li>• Graphic Designing, Tvran&apos;25 (February-March &apos;24)</li>
+                  <li>
+                    • Graphic Designing, Anubhuti&apos;24 (March-April &apos;24)
+                  </li>
+                  <li>
+                    • Graphic Designing, Cultural Council (October &apos;24 -
+                    present)
+                  </li>
+                  <li>
+                    • Executive Members, PTSC (February &apos;25 - present)
+                  </li>
+                  <li>
+                    • Graphic Designing, Tvran&apos;25 (February-March &apos;24)
+                  </li>
                 </ul>
               </div>
             </div>
@@ -498,70 +800,237 @@ export default function Home() {
         </section>
 
         {/* Projects Section Preview */}
-        <section id="projects-preview" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-800' : 'bg-white'
-        }`}>
+        <section
+          id="projects-preview"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-              <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Featured Project</h2>
-              <Link href="/projects" className={`${darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'}`}>View all projects →</Link>
+              <h2
+                className={`text-3xl font-bold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Featured Project
+              </h2>
+              <Link
+                href="/projects"
+                className={`${
+                  darkMode
+                    ? "text-blue-400 hover:text-blue-300"
+                    : "text-blue-600 hover:text-blue-500"
+                } transition-colors duration-200`}
+              >
+                View all projects →
+              </Link>
             </div>
-            <div className={`${darkMode ? 'bg-gray-700' : 'bg-gray-100'} p-6 rounded-lg shadow-lg`}>
-              <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>TaskTrackr</h3>
-              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>TODO App with Authentication</p>
-              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-4`}>
-                A task management application with user authentication, allowing users to create, edit, and delete tasks efficiently.
+            <div
+              className={`${
+                darkMode ? "bg-gray-700" : "bg-gray-100"
+              } p-6 rounded-lg shadow-lg`}
+            >
+              <h3
+                className={`text-2xl font-semibold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                } mb-2`}
+              >
+                TaskTrackr
+              </h3>
+              <p
+                className={`${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                } mb-4`}
+              >
+                TODO App with Authentication
+              </p>
+              <p
+                className={`${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                } mb-4`}
+              >
+                A task management application with user authentication, allowing
+                users to create, edit, and delete tasks efficiently.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
-                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>React</span>
-                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Tailwind CSS</span>
-                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Node.js</span>
-                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>Express</span>
-                <span className={`${darkMode ? 'bg-blue-900 text-blue-300' : 'bg-blue-100 text-blue-800'} px-3 py-1 rounded-full text-sm`}>MongoDB</span>
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-blue-900 text-blue-300"
+                      : "bg-blue-100 text-blue-800"
+                  } px-3 py-1 rounded-full text-sm`}
+                >
+                  React
+                </span>
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-blue-900 text-blue-300"
+                      : "bg-blue-100 text-blue-800"
+                  } px-3 py-1 rounded-full text-sm`}
+                >
+                  Tailwind CSS
+                </span>
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-blue-900 text-blue-300"
+                      : "bg-blue-100 text-blue-800"
+                  } px-3 py-1 rounded-full text-sm`}
+                >
+                  Node.js
+                </span>
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-blue-900 text-blue-300"
+                      : "bg-blue-100 text-blue-800"
+                  } px-3 py-1 rounded-full text-sm`}
+                >
+                  Express
+                </span>
+                <span
+                  className={`${
+                    darkMode
+                      ? "bg-blue-900 text-blue-300"
+                      : "bg-blue-100 text-blue-800"
+                  } px-3 py-1 rounded-full text-sm`}
+                >
+                  MongoDB
+                </span>
               </div>
               <div className="flex gap-4">
-                <Link href="https://task-trackr-indol.vercel.app/" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all">View Demo</Link>
-                <a href="https://github.com/Priyanshu-sde/TaskTrackr" className={`bg-transparent hover:bg-blue-800 ${darkMode ? 'text-gray-300 border-gray-500' : 'text-gray-600 border-gray-400'} font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded transition-all`}>Source Code</a>
+                {/* View Demo */}
+
+                <a
+                  href="https://task-trackr-indol.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all duration-200 inline-block"
+                >
+                  View Demo
+                </a>
+
+                {/* Source Code */}
+
+                <a
+                  href="https://github.com/Priyanshu-sde/TaskTrackr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`bg-transparent hover:bg-blue-800 
+  ${darkMode ? "text-white border-gray-600" : "text-gray-600 border-gray-400"} 
+  font-semibold hover:text-white py-2 px-4 border hover:border-transparent 
+  rounded transition-all duration-200 inline-block`}
+                >
+                  Source Code
+                </a>
               </div>
             </div>
           </div>
         </section>
 
         {/* Achievements Section */}
-        <section id="achievements" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-900' : 'bg-gray-100'
-        }`}>
+        <section
+          id="achievements"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-900" : "bg-gray-100"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
-            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-8`}>Achievements</h2>
+            <h2
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-8`}
+            >
+              Achievements
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
-                <h3 className="text-xl font-semibold text-white mb-4">Hack the Web</h3>
-                <p className="text-white opacity-90">Winner in Round 1 of the Open Source event organized by college</p>
+              <div
+                className={`${
+                  darkMode
+                    ? "bg-gradient-to-r from-blue-900 to-blue-800"
+                    : "bg-gradient-to-r from-blue-500 to-blue-600"
+                } p-6 rounded-lg shadow-lg`}
+              >
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Hack the Web
+                </h3>
+                <p className="text-white opacity-90">
+                  Winner in Round 1 of the Open Source event organized by
+                  college
+                </p>
               </div>
-              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
-                <h3 className="text-xl font-semibold text-white mb-4">Competitive Programming</h3>
-                <p className="text-white opacity-90">Strong performance across multiple platforms showcasing problem-solving skills</p>
+              <div
+                className={`${
+                  darkMode
+                    ? "bg-gradient-to-r from-blue-900 to-blue-800"
+                    : "bg-gradient-to-r from-blue-500 to-blue-600"
+                } p-6 rounded-lg shadow-lg`}
+              >
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Competitive Programming
+                </h3>
+                <p className="text-white opacity-90">
+                  Strong performance across multiple platforms showcasing
+                  problem-solving skills
+                </p>
               </div>
-              <div className={`${darkMode ? 'bg-gradient-to-r from-blue-900 to-blue-800' : 'bg-gradient-to-r from-blue-500 to-blue-600'} p-6 rounded-lg shadow-lg`}>
-                <h3 className="text-xl font-semibold text-white mb-4">Technical Skills</h3>
-                <p className="text-white opacity-90">Proficient in multiple programming languages and web development technologies</p>
+              <div
+                className={`${
+                  darkMode
+                    ? "bg-gradient-to-r from-blue-900 to-blue-800"
+                    : "bg-gradient-to-r from-blue-500 to-blue-600"
+                } p-6 rounded-lg shadow-lg`}
+              >
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  Technical Skills
+                </h3>
+                <p className="text-white opacity-90">
+                  Proficient in multiple programming languages and web
+                  development technologies
+                </p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className={`py-16 px-4 md:px-8 lg:px-16 ${
-          darkMode ? 'bg-gray-800' : 'bg-white'
-        }`}>
+        <section
+          id="contact"
+          className={`py-16 px-4 md:px-8 lg:px-16 ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Get In Touch</h2>
-            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-8`}>I&apos;m currently looking for new opportunities to grow and learn. Feel free to reach out if you want to connect!</p>
+            <h2
+              className={`text-3xl font-bold ${
+                darkMode ? "text-white" : "text-gray-900"
+              } mb-6`}
+            >
+              Get In Touch
+            </h2>
+            <p
+              className={`${darkMode ? "text-gray-300" : "text-gray-600"} mb-8`}
+            >
+              I&apos;m currently looking for new opportunities to grow and
+              learn. Feel free to reach out if you want to connect!
+            </p>
             <div className="flex justify-center gap-4 mb-8">
-              <a href="mailto:priyanshu.sde@gmail.com" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all">
+              <a
+                href="mailto:priyanshu.sde@gmail.com"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all"
+              >
                 Email Me
               </a>
-              <a href="tel:7068451653" className={`bg-transparent hover:bg-blue-800 ${darkMode ? 'text-blue-400 border-blue-500' : 'text-blue-600 border-blue-600'} font-semibold hover:text-white py-3 px-6 border hover:border-transparent rounded-lg transition-all`}>
+              <a
+                href="tel:7068451653"
+                className={`bg-transparent hover:bg-blue-800 ${
+                  darkMode
+                    ? "text-blue-400 border-blue-500"
+                    : "text-blue-600 border-blue-600"
+                } font-semibold hover:text-white py-3 px-6 border hover:border-transparent rounded-lg transition-all`}
+              >
                 Call Me
               </a>
             </div>
@@ -569,67 +1038,110 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className={`py-12 px-4 ${
-          darkMode ? 'bg-gray-900 border-t border-gray-800' : 'bg-white border-t border-gray-200'
-        }`}>
+        <footer
+          className={`py-12 px-4 ${
+            darkMode
+              ? "bg-gray-900 border-t border-gray-800"
+              : "bg-white border-t border-gray-200"
+          }`}
+        >
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
                 className="mb-6 md:mb-0"
               >
-                <h3 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>Priyanshu Chaurasia</h3>
+                <h3
+                  className={`text-2xl font-bold ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  } mb-2`}
+                >
+                  Priyanshu Chaurasia
+                </h3>
                 <p className="text-gray-400">IT Student & Web Developer</p>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="flex space-x-6"
               >
-                <a href="https://github.com/Priyanshu-sde" className={`${
-                  darkMode 
-                  ? 'text-blue-400 hover:text-blue-300' 
-                  : 'text-blue-600 hover:text-blue-700'
-                } transition-colors hover:underline`}>
+                <a
+                  href="https://github.com/Priyanshu-sde"
+                  className={`${
+                    darkMode
+                      ? "text-blue-400 hover:text-blue-300"
+                      : "text-blue-600 hover:text-blue-700"
+                  } transition-colors hover:underline`}
+                >
                   <span className="sr-only">GitHub</span>
-                  <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.032 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.645 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  <svg
+                    className="h-8 w-8"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.032 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.645 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </a>
-                <a href="https://linkedin.com/in/priyanshu-chaurasia" className={`${
-                  darkMode 
-                  ? 'text-blue-400 hover:text-blue-300' 
-                  : 'text-blue-600 hover:text-blue-700'
-                } transition-colors hover:underline`}>
+                <a
+                  href="https://linkedin.com/in/priyanshu-chaurasia"
+                  className={`${
+                    darkMode
+                      ? "text-blue-400 hover:text-blue-300"
+                      : "text-blue-600 hover:text-blue-700"
+                  } transition-colors hover:underline`}
+                >
                   <span className="sr-only">LinkedIn</span>
-                  <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-8 w-8"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 3.915-4.428 6.902-4.428h.48c2.76 0 5.088 1.842 6.48 4.428 1.392 2.586 1.392 4.428 0 6.48-1.842 1.392-2.586 1.392-4.428 0-6.48-1.842z" />
                   </svg>
                 </a>
-                <a href="mailto:priyanshu.sde@gmail.com" className="text-gray-400 hover:text-white transition-all transform hover:scale-110 duration-300">
+                <a
+                  href="mailto:priyanshu.sde@gmail.com"
+                  className="text-gray-400 hover:text-white transition-all transform hover:scale-110 duration-300"
+                >
                   <span className="sr-only">Email</span>
-                  <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-8 w-8"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                   </svg>
                 </a>
               </motion.div>
             </div>
-            
+
             <div className="border-t border-gray-800 pt-8">
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}
                 className="text-gray-400 text-center"
               >
-                © 2025 Priyanshu Chaurasia. All rights reserved. | <a href="https://priyanshu.online" className={`hover:${darkMode ? 'text-blue-400' : 'text-blue-600'} transition-colors`}>priyanshu.online</a>
+                © 2025 Priyanshu Chaurasia. All rights reserved. |{" "}
+                <a
+                  href="https://priyanshu.online"
+                  className={`hover:${
+                    darkMode ? "text-blue-400" : "text-blue-600"
+                  } transition-colors`}
+                >
+                  priyanshu.online
+                </a>
               </motion.p>
             </div>
           </div>

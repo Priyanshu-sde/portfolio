@@ -19,7 +19,7 @@ const ParticlesBackground = () => {
     <Particles
       id="tsparticles"
       init={particlesInit}
-      className="absolute inset-0 z-0"
+      className="z-0 fixed inset-0 pointer-events-none"
       options={{
         fullScreen: false,
         background: {
@@ -31,8 +31,7 @@ const ParticlesBackground = () => {
         interactivity: {
           events: {
             onClick: {
-              enable: true,
-              mode: "push",
+              enable: false
             },
             onHover: {
               enable: true,

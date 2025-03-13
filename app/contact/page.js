@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import WaveDivider from '../../components/WaveDivider';
 import ParticlesBackground from '../../components/ParticlesBackground';
+import emailjs from 'emailjs-com';
 
 export default function Contact() {
   const [darkMode, setDarkMode] = useState(true);
@@ -39,21 +40,30 @@ export default function Contact() {
       [e.target.name]: e.target.value
     });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically handle form submission
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-    // Show success message (in a real app)
-    alert('Message sent successfully!');
+  
+    try {
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+      );
+  
+      alert('Message sent successfully!');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send message.');
+    }
   };
+  
 
   return (
     <>

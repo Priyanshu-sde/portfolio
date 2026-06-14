@@ -96,7 +96,7 @@ export const projects: Project[] = [
     name: "SkyDeploy",
     blurb: "Cloud-native deployment platform with CI/CD for GitHub projects.",
     period: "Jul 2025",
-    live: "https://skydeploy.priyanshu.online/",
+    live: "https://skydeploy.priyanshusde.me/",
     repo: "https://github.com/Priyanshu-sde/SkyDeploy",
     accent: "cyan",
     stack: ["TypeScript", "React", "Tailwind", "AWS S3", "Redis", "Vite", "Node.js"],
